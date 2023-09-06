@@ -4,6 +4,7 @@ import styles from "./Navbar.module.scss"
 import { selectUserName } from '../../../redux/slice/authSlice'
 import { FaUserCircle } from 'react-icons/fa'
 import { NavLink } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
 const activeLink = ({isActive}) => (isActive ? `${styles.active}` : "")
 
