@@ -8,11 +8,11 @@ const useFetchDocument = (collectionName,documentID) => {
   const [document,setDocument] = useState(null)
 
   useEffect(()=>{
-    try{
-      const getDocument = async () =>{
+    try {
+      const getDocument = async () => {
         const docRef = doc(db,collectionName,documentID)
         onSnapshot(docRef,(doc)=>{
-          console.log("document data:",doc.data())
+          // console.log("document data:",doc.data())
           const obj = {
             id: documentID,
             ...doc.data()
@@ -21,9 +21,9 @@ const useFetchDocument = (collectionName,documentID) => {
         })
       }
       getDocument();
-    } catch (error){
+    } catch(error) {
       toast.error(error.message)
-    }
+    }  
   },[collectionName,documentID])
 
   return document
