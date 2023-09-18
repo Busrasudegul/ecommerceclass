@@ -13,13 +13,14 @@ import {getStorage} from "firebase/storage"
 
 
 export const firebaseConfig = {
-  apiKey: "AIzaSyDG17s0jgDfJK0XDvATpQRwkRrJn4ZFJXo",
-  authDomain: "ecommerceclass-6f4f1.firebaseapp.com",
-  projectId: "ecommerceclass-6f4f1",
-  storageBucket: "ecommerceclass-6f4f1.appspot.com",
-  messagingSenderId: "666645205980",
-  appId: "1:666645205980:web:ac60df49ca5c4087397519"
+  apiKey: "AIzaSyC18lV1Q2K7R55V2s716mtChTIvd7yB7lM",
+  authDomain: "ecommerceclass-1a2b1.firebaseapp.com",
+  projectId: "ecommerceclass-1a2b1",
+  storageBucket: "ecommerceclass-1a2b1.appspot.com",
+  messagingSenderId: "439376949570",
+  appId: "1:439376949570:web:e432ac605b38efb77a98db"
 };
+
 
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app)

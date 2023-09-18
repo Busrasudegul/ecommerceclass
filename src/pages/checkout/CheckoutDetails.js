@@ -5,7 +5,7 @@ import Card from '../../components/card/Card'
 import { CountryDropdown } from 'react-country-region-selector'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { SAVE_BILLING_ADDRESS, SAVE_SHIPPING_ADDRESS } from '../../redux/slice/checkoutSlice'
+import { SAVE_BILLING_ADDRESS, SAVE_SHIPPING_ADDRESS, selectBillingAddress, selectShippingAddress } from '../../redux/slice/checkoutSlice'
 import CheckoutSummary from '../../components/checkoutSummary/CheckoutSummary'
 
 const initialState = {
