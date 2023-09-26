@@ -1,14 +1,14 @@
 //// cart sayfasından checkout sayfasına ulaşıp, checkout detaylarını girip, proceed to checkout a bastığımızda karşımıza çıkan sayfa. 
 ////Bu sayfa hem bekleme anını(Initializing checkout...) hem de karşımıza çıkan iki card a sahip  checkoutform componentini içerir.
-import React, { useEffect, useState } from 'react'
+import React, { useState, useEffect } from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import CheckoutForm from "../../components/checkoutForm/CheckoutForm"
-import { CALCULATE_SUBTOTAL, CALCULATE_TOTAL_QUANTITY, selectCartItems, selectCartTotalAmount } from '../../redux/slice/cartSlice';
-import { useDispatch, useSelector } from 'react-redux';
-import { selectEmail } from '../../redux/slice/authSlice';
-import { toast } from 'react-toastify';
-import { selectBillingAddress, selectShippingAddress } from '../../redux/slice/checkoutSlice';
+import { useDispatch, useSelector } from "react-redux";
+import { CALCULATE_SUBTOTAL, CALCULATE_TOTAL_QUANTITY, selectCartItems, selectCartTotalAmount } from "../../redux/slice/cartSlice";
+import { selectEmail } from "../../redux/slice/authSlice";
+import { selectBillingAddress, selectShippingAddress } from "../../redux/slice/checkoutSlice";
+import { toast } from "react-toastify";
 
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PK);
 
@@ -20,8 +20,8 @@ const Checkout = () => {
   const cartItems = useSelector(selectCartItems)
   const totalAmount = useSelector(selectCartTotalAmount)
   const customerEmail = useSelector(selectEmail)
-  const shippingAddress = useSelector(shippingAddress)
-  const billingAddress = useSelector(billingAddress)
+  const shippingAddress = useSelector(selectShippingAddress)
+  const billingAddress = useSelector(selectBillingAddress)
 
   const dispatch = useDispatch()
 
@@ -33,10 +33,9 @@ const Checkout = () => {
   const description = `eShop payment: email:${customerEmail}, Amount: ${totalAmount}`
 
   useEffect(()=>{
-    fetch("https://ecommerce-class-backend-gp40.onrender.com/create-payment-intent",
-    {
+    fetch("https://ecommerce-class-backend-gp40.onrender.com/create-payment-intent", {
       method:"POST",
-      headers:{"Content-Type":"application/json"},
+      headers: {"Content-Type":"application/json"},
       body: JSON.stringify({
         items: cartItems,
         userEmail: customerEmail,
@@ -45,8 +44,8 @@ const Checkout = () => {
         description
       })
     })
-    .then((res)=>{
-      if(res.ok){
+    .then((res)=> {
+      if(res.ok) {
         return res.json()
       }
       return res.json().then((json)=>Promise.reject(json))
@@ -60,29 +59,28 @@ const Checkout = () => {
     })
   },[])
 
-  const appearance = {
-    theme:"stripe"
+  const appearancce = {
+    theme: 'stripe'
   }
   const options = {
     clientSecret,
-    appearance
+    appearancce
   }
 
   return (
     <>
-    <section>
-      <div className='container'>
-        {!clientSecret && <h3>{message} </h3>}
-      </div>
-    </section>
-    {clientSecret && (
-      <Elements options={options} stripe={stripePromise}>
-        <CheckoutForm/>
-      </Elements>
-    )}
+      <section>
+        <div className="container">
+          {!clientSecret && <h3>{message}</h3>}
+        </div>
+      </section>
+      {clientSecret && (
+        <Elements options={options} stripe={stripePromise}>
+          <CheckoutForm/>
+        </Elements>
+      )}
     </>
   )
 }
-
 
 export default Checkout

@@ -21,7 +21,7 @@ import { db } from "../../firebase/config";
 
 const CheckoutForm = () => {
 
-  const stripe = useStripe();
+  const stripe =useStripe();
   const elements = useElements();
 
   const [message,setMessage] = useState(null)
@@ -29,12 +29,13 @@ const CheckoutForm = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
+  
   const userID = useSelector(selectUserID)
   const userEmail = useSelector(selectEmail)
   const cartItems = useSelector(selectCartItems)
   const cartTotalAmount = useSelector(selectCartTotalAmount)
   const shippingAddress = useSelector(selectShippingAddress)
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -48,16 +49,16 @@ const CheckoutForm = () => {
 
     const confirmPayment = await stripe.confirmPayment({
       elements,
-      redirect:"if_required",
+      redirect: "if_required",
     })
-    .then((result)=>{
-      if(result.error){
+    .then((result)=> {
+      if(result.error) {
         toast.error(result.error.message)
         setMessage(result.error.message)
         return
       }
-      if(result.paymentIntent){
-        if(result.paymentIntent.status === "succeeded"){
+      if(result.paymentIntent) {
+        if(result.paymentIntent.status === "succeeded") {
           setIsLoading(false);
           toast.success("Payment successful")
           saveOrder()
@@ -83,11 +84,11 @@ const CheckoutForm = () => {
       createdAt: Timestamp.now().toDate()
     }
     try {
-       addDoc(collection(db,"orders"),orderConfig)
-       toast.success("Order saved")
-       dispatch(CLEAR_CART())
-       navigate("/checkout-success")
-    } catch(error){
+      addDoc(collection(db,"orders"), orderConfig)
+      toast.success("Order saved")
+      dispatch(CLEAR_CART())
+      navigate("/checkout-success")
+    } catch (error) {
       toast.error(error.message)
     }
   }
@@ -95,15 +96,16 @@ const CheckoutForm = () => {
   const paymentElementOptions = {
     layout: "tabs"
   }
+
   return (
     <section>
       <div className={`container ${styles.checkout}`}>
         <h2>Checkout</h2>
         <form onSubmit={handleSubmit}>
           <div>
-          <Card cardClass={styles.card}>
-            <CheckoutSummary/>
-          </Card>
+            <Card cardClass={styles.card}>
+              <CheckoutSummary/>
+            </Card>
           </div>
           <div>
             <Card cardClass={styles.card}>
